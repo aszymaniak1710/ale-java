@@ -1,0 +1,2 @@
+ALTER TABLE alerts
+    ADD COLUMN district VARCHAR(20);

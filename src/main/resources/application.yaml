@@ -1,3 +1,14 @@
 spring:
   application:
     name: alertly
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db
+    username: postgres
+    password: 1112
+  jpa:
+    show-sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+server:
+  port: 19014
