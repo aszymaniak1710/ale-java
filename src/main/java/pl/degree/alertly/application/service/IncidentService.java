@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import pl.degree.alertly.infrastructure.model.IncidentEntity;
 import pl.degree.alertly.infrastructure.repo.IncidentRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class IncidentService {
@@ -14,5 +16,9 @@ public class IncidentService {
 
     public IncidentEntity save(IncidentEntity incident) {
         return incidentRepository.save(incident);
+    }
+
+    public List<IncidentEntity> getAllIncidents() {
+        return incidentRepository.findAll();
     }
 }

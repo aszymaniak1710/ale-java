@@ -2,10 +2,7 @@ package pl.degree.alertly.application.rest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.degree.alertly.application.service.UserService;
 import pl.degree.alertly.infrastructure.model.UserAlertSettingsEntity;
 
@@ -19,6 +16,7 @@ public class UserController {
 
     @PostMapping("/alert/settings")
     public UserAlertSettingsEntity setAlertSettings(@RequestBody UserAlertSettingsEntity alertSettings) {
-        return userService.save(alertSettings);
+        return userService.setUserSettings(alertSettings);
     }
+
 }

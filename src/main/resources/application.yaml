@@ -2,7 +2,7 @@ spring:
   application:
     name: alertly
   datasource:
-    url: jdbc:postgresql://localhost:5432/db
+    url: jdbc:postgresql://localhost:5434/db
     username: postgres
     password: 1112
   jpa:

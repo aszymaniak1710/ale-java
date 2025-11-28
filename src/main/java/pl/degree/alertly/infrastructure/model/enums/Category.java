@@ -1,4 +1,4 @@
-package pl.degree.alertly.infrastructure.model;
+package pl.degree.alertly.infrastructure.model.enums;
 
 public enum Category {
     OTHER,
