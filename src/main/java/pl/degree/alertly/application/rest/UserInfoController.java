@@ -31,8 +31,8 @@ public class UserInfoController {
     }
 
     @PostMapping("/setfriends")
-    public ResponseEntity<UserInfoEntity> updateFamilyNumbers(@RequestHeader("Authorization") String token, @RequestBody List<User> users) {
-        return ResponseEntity.ok(userService.updateFriends(token, users));
+    public ResponseEntity<UserInfoEntity> updateFamilyNumbers(@RequestHeader("Authorization") String token, @RequestBody List<String> usernames) {
+        return ResponseEntity.ok(userService.updateFriends(token, usernames));
     }
 
     @GetMapping("/familynumbers")

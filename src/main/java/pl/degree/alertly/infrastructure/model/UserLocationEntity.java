@@ -1,6 +1,7 @@
 package pl.degree.alertly.infrastructure.model;
 
 import jakarta.annotation.Nonnull;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -16,10 +17,11 @@ import java.time.LocalDateTime;
 @Data @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLocation {
-    @Id @Nonnull
+public class UserLocationEntity {
+    @Id @Nonnull @Column(name = "user_token")
     private String token;
     @Nonnull Double latitude;
-    @Nonnull private Double width;
+    @Nonnull private Double longitude;
+    @Column(name = "created_at")
     @Nonnull private LocalDateTime createTimeStamp;
 }

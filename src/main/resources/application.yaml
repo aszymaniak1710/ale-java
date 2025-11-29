@@ -12,3 +12,14 @@ spring:
     locations: classpath:db/migration
 server:
   port: 19014
+alertly:
+  default-user-settings:
+    radius: 10
+    category:
+      - OTHER
+      - FIGHT
+      - SUSPICIOUS
+    level:
+      - LOW
+      - MEDIUM
+      - HIGH

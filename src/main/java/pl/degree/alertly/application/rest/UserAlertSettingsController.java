@@ -10,7 +10,7 @@ import pl.degree.alertly.infrastructure.model.UserAlertSettingsEntity;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Slf4j
-public class UserController {
+public class UserAlertSettingsController {
 
     private final UserService userService;
 
@@ -19,4 +19,8 @@ public class UserController {
         return userService.setUserSettings(alertSettings);
     }
 
+    @GetMapping("/alert/settings")
+    public UserAlertSettingsEntity setAlertSettings(@RequestHeader("Authorization") String token) {
+        return userService.getUserSettings(token);
+    }
 }

@@ -8,13 +8,16 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import pl.degree.alertly.application.rest.model.User
 import pl.degree.alertly.application.service.UserService
 import pl.degree.alertly.infrastructure.model.UserInfoEntity
+import pl.degree.alertly.infrastructure.model.enums.Category
+import pl.degree.alertly.infrastructure.repo.UserAlertSettingsRepository
 import pl.degree.alertly.infrastructure.repo.UserInfoRepository
+import spock.lang.ResourceLock
 import spock.lang.Specification
 
-import static pl.degree.alertly.application.rest.UserFactory.user
+import static pl.degree.alertly.application.factory.UserFactory.user
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("test")
+@ActiveProfiles("test") @ResourceLock("UserAlertSettingsRepository")
 class UserInfoSpec extends Specification {
 
     @LocalServerPort
@@ -25,37 +28,44 @@ class UserInfoSpec extends Specification {
     @Autowired
     UserInfoRepository userInfoRepository
     @Autowired
+    UserAlertSettingsRepository userSettingsRepository
+    @Autowired
     UserService userService
 
     def setup() {
         client = WebTestClient.bindToServer()
                 .baseUrl("http://localhost:${port}")
                 .build()
+        userSettingsRepository.deleteAll()
+        userInfoRepository.deleteAll()
     }
 
     def "should register user"() {
         given:
-        def request = [username: "adam"]
+        def username = "adam"
         def token = "ddd"
         when:
         def response = client.post()
                 .uri("/user/register")
                 .header("Authorization", token)
-                .bodyValue(request)
+                .bodyValue(username)
                 .exchange()
         then:
         response.expectStatus().isOk()
         def user = userInfoRepository.findById(token).orElse(null)
         user != null
         user.username == "adam"
+        def userSettings = userSettingsRepository.findById(token).orElseThrow()
+        userSettings.getRadius() == 10
+        userSettings.getCategory() == List.of(Category.OTHER, Category.FIGHT, Category.SUSPICIOUS)
     }
 
     def "should set and get family numbers"() {
         given:
         def token = "123"
         def numbers = List.of("123456789", "987654321")
-        userInfoRepository.saveAndFlush(new UserInfoEntity(token, "adam", null, null))
-        def requestBody = [numbers: ["123456789", "987654321"]]
+        userInfoRepository.saveAndFlush(userInfoEntity)
+        def requestBody = ["123456789", "987654321"]
         when:
         def response = client.post()
                 .uri("/user/familynumbers")
@@ -73,6 +83,8 @@ class UserInfoSpec extends Specification {
                 .exchange()
         response2.expectStatus().isOk()
         response2.expectBody(List<String>).returnResult().responseBody == numbers
+        where:
+        userInfoEntity << [new UserInfoEntity("123", "adam", null, null), new UserInfoEntity("123", "adam", null, ["123456789"])]
     }
 
     def "should get usernames and set friends"() {
@@ -95,7 +107,7 @@ class UserInfoSpec extends Specification {
         def response2 = client.post()
                 .uri("/user/setfriends")
                 .header("Authorization", token)
-                .bodyValue(List.of(user("tomek", true), user("ewa", true)))
+                .bodyValue(List.of("tomek", "ewa"))
                 .exchange()
         then:
         response2.expectStatus().isOk()

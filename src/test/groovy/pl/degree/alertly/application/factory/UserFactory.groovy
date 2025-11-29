@@ -1,4 +1,4 @@
-package pl.degree.alertly.application.rest
+package pl.degree.alertly.application.factory
 
 import groovy.transform.CompileStatic
 import pl.degree.alertly.application.rest.model.User
