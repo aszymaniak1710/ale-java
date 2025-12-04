@@ -112,6 +112,6 @@ class UserInfoSpec extends Specification {
         then:
         response2.expectStatus().isOk()
         def user = userInfoRepository.findById(token).orElse(null)
-        user.friends_un == List.of("tomek", "ewa")
+        user.friends_un == List.of("t2", "t3")
     }
 }

@@ -10,6 +10,9 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+  kafka:
+    topic:
+      alert: alert
 server:
   port: 19014
 alertly:

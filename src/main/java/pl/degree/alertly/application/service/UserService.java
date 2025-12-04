@@ -16,9 +16,7 @@ import pl.degree.alertly.infrastructure.repo.UserLocationRepository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -62,11 +60,11 @@ public class UserService {
     }
 
     @Transactional
-    public UserInfoEntity updateFriends(String token, List<String> friends) {
+    public UserInfoEntity updateFriends(String token, List<String> friendUsernames) {
         UserInfoEntity user = userInfoRepository.findById(token)
                 .orElseThrow(() -> new RuntimeException("User not found: " + token));
-
-        user.setFriends_un(friends);
+        List<String> friendTokens = userInfoRepository.findTokensByUsernames(friendUsernames);
+        user.setFriends_un(friendTokens);
         return userInfoRepository.save(user);
     }
 
