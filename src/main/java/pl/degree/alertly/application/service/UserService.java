@@ -41,11 +41,23 @@ public class UserService {
         return userInfoRepository.save(createUserInfo(token, username));
     }
 
+    @Transactional
+    public UserAlertSettingsEntity changeDevice(String token, String deviceId) {
+        var user = userAlertSettingsRepository.findById(token).orElseThrow();
+        user.setDeviceId(deviceId);
+        return userAlertSettingsRepository.save(user);
+    }
+
     @Transactional(readOnly = true)
     public List<User> getAllUsernames(String token) {
         List<String> usernames = userInfoRepository.findAllUsernames();
         String hostUsername = userInfoRepository.findById(token).orElseThrow().getUsername();
-        List<String> userFriends = userInfoRepository.findById(token).orElseThrow().getFriends_un();
+        List<String> friendTokens = userInfoRepository.findById(token).orElseThrow().getFriends_un();
+
+        List<String> userFriends = (friendTokens != null && !friendTokens.isEmpty())
+                ? userInfoRepository.findUsernamesByTokens(friendTokens)
+                : Collections.emptyList();
+
         return usernames.stream()
                 .filter(user -> !Objects.equals(user, hostUsername))
                 .map((username -> new User(username, userFriends.contains(username))))
@@ -56,14 +68,19 @@ public class UserService {
     public List<String> getAllNumbers(String token) {
         UserInfoEntity user = userInfoRepository.findById(token)
                 .orElseThrow(() -> new RuntimeException("User not found: " + token));
-        return user.getFamily_nr();
+        List<String> numbers = user.getFamily_nr();
+        return numbers != null ? numbers : Collections.emptyList();
     }
 
     @Transactional
     public UserInfoEntity updateFriends(String token, List<String> friendUsernames) {
+        System.out.println("Updating friends for token: " + token + ", friends: " + friendUsernames);
         UserInfoEntity user = userInfoRepository.findById(token)
                 .orElseThrow(() -> new RuntimeException("User not found: " + token));
+
         List<String> friendTokens = userInfoRepository.findTokensByUsernames(friendUsernames);
+        System.out.println("Found friend tokens: " + friendTokens);
+
         user.setFriends_un(friendTokens);
         return userInfoRepository.save(user);
     }
@@ -91,17 +108,17 @@ public class UserService {
     public List<UserLocation> friendsLocation(String token) {
         List<UserLocation> result = new ArrayList<>();
         for (UserInfoEntity user : userInfoRepository.findUsersWhoHaveMeAsFriend(token)) {
-            userLocationRepository.findById(user.getToken())
+            userLocationRepository.findById(user.getUid())
                     .ifPresent(loc -> result.add(
-                            createUserLocation(user.getUsername(), new Location(loc.getLatitude(), loc.getLongitude()))
-                    ));
+                            createUserLocation(user.getUsername(),
+                                    new Location(loc.getLatitude(), loc.getLongitude()))));
         }
         return result;
     }
 
     private UserInfoEntity createUserInfo(String token, String username) {
         UserInfoEntity user = new UserInfoEntity();
-        user.setToken(token);
+        user.setUid(token);
         user.setUsername(username);
         return user;
     }
@@ -125,6 +142,4 @@ public class UserService {
     private UserLocation createUserLocation(String username, Location location) {
         return new UserLocation(username, location.latitude(), location.longitude());
     }
-
-
 }

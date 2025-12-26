@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface IncidentRepository extends JpaRepository<IncidentEntity, Long> {
     List<IncidentEntity> findByTimeAfter(LocalDateTime time);
+    boolean existsByToken(String token);  // ← DODAJ TO
 }

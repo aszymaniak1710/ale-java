@@ -19,19 +19,22 @@ public class UserInfoController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserInfoEntity> registerUser(@RequestHeader("Authorization") String token, @RequestBody String username) {
+    public ResponseEntity<UserInfoEntity> registerUser(@RequestHeader("Authorization") String token,
+            @RequestBody String username) {
         return ResponseEntity.ok(
-                userService.registerUser(username, token)
-        );
+                userService.registerUser(username, token));
     }
 
     @GetMapping("/list")
     public ResponseEntity<List<User>> getAllUsernames(@RequestHeader("Authorization") String token) {
-        return ResponseEntity.ok(userService.getAllUsernames(token));
+        var d = userService.getAllUsernames(token);
+        System.out.println(d);
+        return ResponseEntity.ok(d);
     }
 
     @PostMapping("/setfriends")
-    public ResponseEntity<UserInfoEntity> updateFamilyNumbers(@RequestHeader("Authorization") String token, @RequestBody List<String> usernames) {
+    public ResponseEntity<UserInfoEntity> updateFamilyNumbers(@RequestHeader("Authorization") String token,
+            @RequestBody List<String> usernames) {
         return ResponseEntity.ok(userService.updateFriends(token, usernames));
     }
 
@@ -41,9 +44,9 @@ public class UserInfoController {
     }
 
     @PostMapping("/familynumbers")
-    public ResponseEntity<UserInfoEntity> setFamilyNumbersForUser(@RequestHeader("Authorization") String token, @RequestBody List<String> numbers) {
+    public ResponseEntity<UserInfoEntity> setFamilyNumbersForUser(@RequestHeader("Authorization") String token,
+            @RequestBody List<String> numbers) {
         return ResponseEntity.ok(
-                userService.updateFamilyNumbers(token, numbers)
-        );
+                userService.updateFamilyNumbers(token, numbers));
     }
 }

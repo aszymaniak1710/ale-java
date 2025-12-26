@@ -12,16 +12,23 @@ public interface UserInfoRepository extends JpaRepository<UserInfoEntity, String
     List<String> findAllUsernames();
 
     @Query(value = """
-    SELECT *
-    FROM user_info u
-    WHERE :token = ANY(u.friends_un)
-    """, nativeQuery = true)
+            SELECT *
+            FROM user_info u
+            WHERE :token = ANY(u.friends_un)
+            """, nativeQuery = true)
     List<UserInfoEntity> findUsersWhoHaveMeAsFriend(String token);
 
     @Query("""
-    SELECT u.token
-    FROM UserInfoEntity u
-    WHERE u.username IN :usernames
-    """)
+            SELECT u.uid
+            FROM UserInfoEntity u
+            WHERE u.username IN :usernames
+            """)
     List<String> findTokensByUsernames(List<String> usernames);
+
+    @Query("""
+            SELECT u.username
+            FROM UserInfoEntity u
+            WHERE u.uid IN :tokens
+            """)
+    List<String> findUsernamesByTokens(List<String> tokens);
 }

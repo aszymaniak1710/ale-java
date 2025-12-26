@@ -17,7 +17,8 @@ public class IncidentController {
     private final IncidentService incidentService;
 
     @PostMapping
-    public IncidentEntity reportIndicent(@RequestBody IncidentEntity incident) {
+    public IncidentEntity reportIndicent(@RequestHeader("Authorization") String token, @RequestBody IncidentEntity incident) {
+        incident.setToken(token);
         return incidentService.save(incident);
     }
 

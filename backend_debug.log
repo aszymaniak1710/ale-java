@@ -1,0 +1,100 @@
+> Task :compileJava
+> Task :compileGroovy NO-SOURCE
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :resolveMainClassName
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.0)
+
+2025-12-04T20:32:17.641+01:00  INFO 46885 --- [alertly] [  restartedMain] pl.degree.alertly.AlertlyApplication     : Starting AlertlyApplication using Java 21.0.8 with PID 46885 (/Applications/Workspace/Alertly-v2/ale-java-master/build/classes/java/main started by krystian in /Applications/Workspace/Alertly-v2/ale-java-master)
+2025-12-04T20:32:17.643+01:00  INFO 46885 --- [alertly] [  restartedMain] pl.degree.alertly.AlertlyApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-12-04T20:32:17.658+01:00  INFO 46885 --- [alertly] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-12-04T20:32:17.658+01:00  INFO 46885 --- [alertly] [  restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-12-04T20:32:17.834+01:00  INFO 46885 --- [alertly] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-04T20:32:17.877+01:00  INFO 46885 --- [alertly] [  restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 4 JPA repository interfaces.
+2025-12-04T20:32:18.084+01:00  INFO 46885 --- [alertly] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 19014 (http)
+2025-12-04T20:32:18.089+01:00  INFO 46885 --- [alertly] [  restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-04T20:32:18.089+01:00  INFO 46885 --- [alertly] [  restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.14]
+2025-12-04T20:32:18.103+01:00  INFO 46885 --- [alertly] [  restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 444 ms
+2025-12-04T20:32:18.224+01:00  INFO 46885 --- [alertly] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-04T20:32:18.276+01:00  INFO 46885 --- [alertly] [  restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4c1d2d7e
+2025-12-04T20:32:18.276+01:00  INFO 46885 --- [alertly] [  restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-04T20:32:18.286+01:00  INFO 46885 --- [alertly] [  restartedMain] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:5434/db (PostgreSQL 15.15)
+2025-12-04T20:32:18.308+01:00  INFO 46885 --- [alertly] [  restartedMain] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.010s)
+2025-12-04T20:32:18.329+01:00  INFO 46885 --- [alertly] [  restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 10
+2025-12-04T20:32:18.330+01:00  INFO 46885 --- [alertly] [  restartedMain] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2025-12-04T20:32:18.354+01:00  INFO 46885 --- [alertly] [  restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-12-04T20:32:18.369+01:00  INFO 46885 --- [alertly] [  restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 7.1.8.Final
+2025-12-04T20:32:18.507+01:00  INFO 46885 --- [alertly] [  restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-04T20:32:18.536+01:00  INFO 46885 --- [alertly] [  restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://localhost:5434/db]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 15.15
+	Default catalog/schema: db/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DatasourceConnectionProviderImpl
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-12-04T20:32:18.811+01:00  INFO 46885 --- [alertly] [  restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-12-04T20:32:18.814+01:00  INFO 46885 --- [alertly] [  restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-04T20:32:18.841+01:00  INFO 46885 --- [alertly] [  restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-04T20:32:19.136+01:00  WARN 46885 --- [alertly] [  restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-04T20:32:19.245+01:00  INFO 46885 --- [alertly] [  restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 19014 (http) with context path '/'
+2025-12-04T20:32:19.247+01:00  INFO 46885 --- [alertly] [  restartedMain] pl.degree.alertly.AlertlyApplication     : Started AlertlyApplication in 1.734 seconds (process running for 1.888)
+2025-12-04T20:32:43.617+01:00  INFO 46885 --- [alertly] [io-19014-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-04T20:32:43.617+01:00  INFO 46885 --- [alertly] [io-19014-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-04T20:32:43.617+01:00  INFO 46885 --- [alertly] [io-19014-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+Updating friends for token: 3AoFnJVOAyRyyV48ggCo0lzt8ro2, friends: [krystian2]
+Hibernate: select uie1_0.token,uie1_0.family_nr,uie1_0.friends_un,uie1_0.username from user_info uie1_0 where uie1_0.token=?
+Hibernate: select uie1_0.token from user_info uie1_0 where uie1_0.username in (?)
+Found friend tokens: [oO61Ofc04ZN7nCOWwCOx0Ec2jrP2]
+Hibernate: update user_info set family_nr=?,friends_un=?,username=? where token=?
+Hibernate: select uie1_0.token,uie1_0.family_nr,uie1_0.friends_un,uie1_0.username from user_info uie1_0 where uie1_0.token=?
+Hibernate: select ie1_0.id,ie1_0.category,ie1_0.description,ie1_0.district,ie1_0.latitude,ie1_0.level,ie1_0.time,ie1_0.token,ie1_0.width from incidents ie1_0
+Hibernate: select uie1_0.username from user_info uie1_0
+Hibernate: select uie1_0.token,uie1_0.family_nr,uie1_0.friends_un,uie1_0.username from user_info uie1_0 where uie1_0.token=?
+[User[username=krystian2, isFriend=false]]
+Updating friends for token: lIu6Ls7ZHjhGLo6mbM3tPIkXQcw2, friends: [krystian2]
+Hibernate: select uie1_0.token,uie1_0.family_nr,uie1_0.friends_un,uie1_0.username from user_info uie1_0 where uie1_0.token=?
+Hibernate: select uie1_0.token from user_info uie1_0 where uie1_0.username in (?)
+Found friend tokens: [oO61Ofc04ZN7nCOWwCOx0Ec2jrP2]
+Hibernate: select uie1_0.username from user_info uie1_0
+Hibernate: select uie1_0.token,uie1_0.family_nr,uie1_0.friends_un,uie1_0.username from user_info uie1_0 where uie1_0.token=?
+[User[username=krystian2, isFriend=false]]
+Updating friends for token: lIu6Ls7ZHjhGLo6mbM3tPIkXQcw2, friends: [krystian2]
+Hibernate: select uie1_0.token,uie1_0.family_nr,uie1_0.friends_un,uie1_0.username from user_info uie1_0 where uie1_0.token=?
+Hibernate: select uie1_0.token from user_info uie1_0 where uie1_0.username in (?)
+Found friend tokens: [oO61Ofc04ZN7nCOWwCOx0Ec2jrP2]
+Updating friends for token: lIu6Ls7ZHjhGLo6mbM3tPIkXQcw2, friends: [krystian2]
+Hibernate: select uie1_0.token,uie1_0.family_nr,uie1_0.friends_un,uie1_0.username from user_info uie1_0 where uie1_0.token=?
+Hibernate: select uie1_0.token from user_info uie1_0 where uie1_0.username in (?)
+Found friend tokens: [oO61Ofc04ZN7nCOWwCOx0Ec2jrP2]
+Hibernate: select ule1_0.user_token,ule1_0.created_at,ule1_0.latitude,ule1_0.longitude from user_location ule1_0 where ule1_0.user_token=?
+Hibernate: update user_location set created_at=?,latitude=?,longitude=? where user_token=?
+Hibernate: select uie1_0.username from user_info uie1_0
+Hibernate: select uie1_0.token,uie1_0.family_nr,uie1_0.friends_un,uie1_0.username from user_info uie1_0 where uie1_0.token=?
+[User[username=krystian2, isFriend=false]]
+Hibernate: SELECT *
+FROM user_info u
+WHERE ? = ANY(u.friends_un)
+
+Hibernate: select ule1_0.user_token,ule1_0.created_at,ule1_0.latitude,ule1_0.longitude from user_location ule1_0 where ule1_0.user_token=?
+Hibernate: update user_location set created_at=?,latitude=?,longitude=? where user_token=?
+Hibernate: select ule1_0.user_token,ule1_0.created_at,ule1_0.latitude,ule1_0.longitude from user_location ule1_0 where ule1_0.user_token=?
+Hibernate: update user_location set created_at=?,latitude=?,longitude=? where user_token=?
+Hibernate: SELECT *
+FROM user_info u
+WHERE ? = ANY(u.friends_un)
+

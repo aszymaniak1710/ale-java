@@ -90,7 +90,7 @@ class UserInfoSpec extends Specification {
     def "should get usernames and set friends"() {
         given:
         def token = "t1"
-        userInfoRepository.save(new UserInfoEntity(token, "adam", ["ewa"], []))
+        userInfoRepository.save(new UserInfoEntity(token, "adam", ["t2"], []))
         userInfoRepository.save(new UserInfoEntity("t2", "ewa", [], []))
         userInfoRepository.saveAndFlush(new UserInfoEntity("t3", "tomek", [], []))
 

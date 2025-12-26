@@ -23,6 +23,9 @@ public class UserAlertSettingsEntity {
     @Id
     private String token;
 
+    @Nullable
+    private String deviceId;
+
     @Nonnull
     private Integer radius;
 

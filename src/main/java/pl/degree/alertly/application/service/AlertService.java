@@ -3,14 +3,22 @@ package pl.degree.alertly.application.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.degree.alertly.infrastructure.config.UserAlertSettingsProperties;
+import pl.degree.alertly.infrastructure.model.IncidentDeviceId;
 import pl.degree.alertly.infrastructure.model.IncidentEntity;
 import pl.degree.alertly.infrastructure.model.UserAlertSettingsEntity;
+import pl.degree.alertly.infrastructure.model.UserMessagingEntity;
+import pl.degree.alertly.infrastructure.model.enums.MessageQuantity;
 import pl.degree.alertly.infrastructure.repo.IncidentRepository;
 import pl.degree.alertly.infrastructure.repo.UserAlertSettingsRepository;
 import pl.degree.alertly.infrastructure.repo.UserLocationRepository;
-import pl.degree.alertly.infrastructure.sender.AlertSender;
+import pl.degree.alertly.infrastructure.repo.UserMessagingRepository;
+import pl.degree.alertly.infrastructure.sender.FirebaseSenderService;
 
 import java.time.LocalDateTime;
+
+import static pl.degree.alertly.infrastructure.model.enums.MessageQuantity.ONCE;
+import static pl.degree.alertly.infrastructure.model.enums.MessageQuantity.TWICE;
 
 @Service
 @RequiredArgsConstructor
@@ -19,26 +27,74 @@ public class AlertService {
     private final UserAlertSettingsRepository userAlertSettingsRepository;
     private final UserLocationRepository userLocationRepository;
     private final IncidentRepository incidentRepository;
-    private final AlertSender alertSender;
+    private final UserMessagingRepository userMessagingRepository;
+    private final UserAlertSettingsProperties properties;
+    private final FirebaseSenderService firebaseSenderService;
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void sendProperAlerts() {
         var usersSettings = userAlertSettingsRepository.findAll();
-        var notExpiredIncidents = incidentRepository.findByTimeAfter(LocalDateTime.now().minusMinutes(10));
-        notExpiredIncidents.forEach(incident -> {
-            usersSettings.forEach(user -> {
-                if (shouldSendByCategory(incident, user) && shouldSendByLevel(incident, user) && shouldSendByTimePeriod(incident, user) && shouldSendByLocation(incident, user)) {
-                    alertSender.send(incident.toString());
-                }
-            });
-        });
+        var notExpiredIncidents = incidentRepository.findByTimeAfter(LocalDateTime.now().minusMinutes(120));
+        notExpiredIncidents.forEach(incident ->
+                usersSettings.forEach(user ->
+                        processAlertForUser(incident, user)
+                )
+        );
     }
 
-    private boolean shouldSendByLocation(IncidentEntity incident, UserAlertSettingsEntity user) {
+    private void processAlertForUser(IncidentEntity incident, UserAlertSettingsEntity user) {
+        if (isUserInterestedInIncident(incident, user)) {
+            if (userInRadius(incident, user)) {
+                processUserInRadius(incident, user);
+            } else {
+                resetUserMessaging(incident, user);
+            }
+        }
+    }
+
+    private void resetUserMessaging(IncidentEntity incident, UserAlertSettingsEntity user) {
+        userMessagingRepository.findById(new IncidentDeviceId(incident.getId(), user.getToken()))
+                .ifPresent(userMessagingRepository::delete);
+    }
+
+    private void processUserInRadius(IncidentEntity incident, UserAlertSettingsEntity user) {
+        var userMessage = userMessagingRepository.findById(new IncidentDeviceId(incident.getId(), user.getToken()));
+        if (userMessage.isPresent()) {
+            if (userMessage.get().getMessageQuantity() == ONCE) {
+                if (isUserClose(incident, user.getToken(), user.getRadius())) {
+                    send(incident, user.getDeviceId(), TWICE);
+                }
+            }
+        } else {
+            send(incident, user.getDeviceId(), ONCE);}
+    }
+
+    private void send(IncidentEntity incident, String deviceId, MessageQuantity quantity) {
+        firebaseSenderService.send(deviceId, incident, quantity);
+        userMessagingRepository.save(new UserMessagingEntity(new IncidentDeviceId(incident.getId(), deviceId), quantity));
+    }
+
+    private boolean isUserClose(IncidentEntity incident, String userToken, Integer userRadius) {
+        var closeDistance = properties.getCloseIncidentDistance();
+        return userRadius >= closeDistance * 2 && distance(incident, userToken) <= closeDistance;
+    }
+
+    private boolean isUserInterestedInIncident(IncidentEntity incident, UserAlertSettingsEntity user) {
+        return shouldSendByCategory(incident, user)
+                && shouldSendByLevel(incident, user)
+                && shouldSendByTimePeriod(incident, user);
+    }
+
+    private boolean userInRadius(IncidentEntity incident, UserAlertSettingsEntity user) {
         var userLocation = userLocationRepository.findById(user.getToken()).orElse(null);
         if (userLocation == null) return false;
         var distance = distance(incident.getLatitude(), incident.getWidth(), userLocation.getLatitude(), userLocation.getLongitude());
         return distance <= user.getRadius();
+    }
+
+    private double distance(IncidentEntity incident, String userToken) {
+        var userLocation = userLocationRepository.findById(userToken).orElseThrow();
+        return distance(incident.getLatitude(), incident.getWidth(), userLocation.getLatitude(), userLocation.getLongitude());
     }
 
     private boolean shouldSendByTimePeriod(IncidentEntity incident, UserAlertSettingsEntity user) {

@@ -18,7 +18,7 @@ import java.util.List;
 public class UserInfoEntity {
 
     @Id
-    private String token;
+    private String uid;
     @Nonnull private String username;
     @JdbcTypeCode(SqlTypes.ARRAY)
     @Column(columnDefinition = "text[]")

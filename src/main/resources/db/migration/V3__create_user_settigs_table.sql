@@ -4,6 +4,7 @@ CREATE TYPE level_enum AS ENUM ('HIGH', 'MEDIUM', 'LOW');
 
 CREATE TABLE user_alert_settings (
     token VARCHAR(20) PRIMARY KEY,
+    device_id VARCHAR(100),
     radius INT NOT NULL,
     category category_enum[] NOT NULL,
     level level_enum[] NOT NULL,
@@ -12,7 +13,8 @@ CREATE TABLE user_alert_settings (
 );
 
 CREATE TABLE user_info (
-    token VARCHAR(20) PRIMARY KEY,
+    uid VARCHAR(20) PRIMARY KEY,
+    deviceid VARCHAR(20),
     username VARCHAR(20),
     friends_un TEXT[],
     family_nr TEXT[],

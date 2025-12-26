@@ -10,7 +10,7 @@ import java.util.List;
 @ConfigurationProperties(prefix = "alertly.default-user-settings")
 @Data
 public class UserAlertSettingsProperties {
-
+    private Integer closeIncidentDistance;
     private Integer radius;
     private List<Category> category;
     private List<Level> level;

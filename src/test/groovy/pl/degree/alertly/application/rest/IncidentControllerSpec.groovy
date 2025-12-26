@@ -54,7 +54,7 @@ class IncidentControllerSpec extends Specification{
         def incident2 = createEntity(Category.FIGHT)
         def response2 = client.post()
                 .uri("/incident")
-                .header("Authorization", "321")
+                .header("Authorization", "123")
                 .bodyValue(incident2)
                 .exchange()
         then:

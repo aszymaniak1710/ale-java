@@ -11,7 +11,7 @@ description = 'Project for alertly'
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
+		languageVersion = JavaLanguageVersion.of(17)
 	}
 }
 
@@ -44,6 +44,7 @@ dependencies {
 	testImplementation 'org.spockframework:spock-spring:2.4-M7-groovy-5.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'com.google.firebase:firebase-admin:9.7.0'
 }
 
 tasks.named('test') {

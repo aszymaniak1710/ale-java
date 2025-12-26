@@ -10,7 +10,7 @@ import java.time.LocalDateTime
 @CompileStatic
 class UserAlertSettingsEntityFactory {
 
-    static createEntity(String token, Integer radius = 12, List<Category> category = List.of(Category.FIGHT), List<Level> level = List.of(Level.MEDIUM), LocalDateTime from = null, LocalDateTime to = null) {
-        new UserAlertSettingsEntity(token, radius, category, level, from, to)
+    static createEntity(String token, String deviceId = "device", Integer radius = 12, List<Category> category = List.of(Category.FIGHT), List<Level> level = List.of(Level.MEDIUM), LocalDateTime from = null, LocalDateTime to = null) {
+        new UserAlertSettingsEntity(token, deviceId, radius, category, level, from, to)
     }
 }
