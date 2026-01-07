@@ -1,1 +1,0 @@
-CREATE INDEX IF NOT EXISTS idx_incidents_token ON incidents(token);

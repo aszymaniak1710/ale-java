@@ -4,8 +4,8 @@ CREATE TABLE user_messaging (
     message_quantity VARCHAR(20) NOT NULL,
 
     CONSTRAINT pk_user_messaging
-        PRIMARY KEY (incident_id, user_id),
+        PRIMARY KEY (incident_id, device_id),
 
     CONSTRAINT fk_incident
-        FOREIGN KEY (incident_id) REFERENCES alerts(id)
+        FOREIGN KEY (incident_id) REFERENCES incidents(id)
 );
