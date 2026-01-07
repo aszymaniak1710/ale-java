@@ -11,7 +11,7 @@ public class AlertsSendingJob {
 
     private final AlertService alertService;
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 30000)
     public void sendProper() {
         alertService.sendProperAlerts();
     }
