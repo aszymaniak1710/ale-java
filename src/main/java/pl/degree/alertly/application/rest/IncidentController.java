@@ -17,13 +17,14 @@ public class IncidentController {
     private final IncidentService incidentService;
 
     @PostMapping
-    public IncidentEntity reportIndicent(@RequestHeader("Authorization") String token, @RequestBody IncidentEntity incident) {
+    public IncidentEntity reportIndicent(@RequestHeader("Authorization") String token,
+            @RequestBody IncidentEntity incident) {
         incident.setToken(token);
         return incidentService.save(incident);
     }
 
     @GetMapping("/all")
-    public List<IncidentEntity> getAllIncidents(){
+    public List<IncidentEntity> getAllIncidents() {
         return incidentService.getAllIncidents();
     }
 }

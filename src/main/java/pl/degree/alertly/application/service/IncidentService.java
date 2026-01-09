@@ -1,6 +1,5 @@
 package pl.degree.alertly.application.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.degree.alertly.infrastructure.model.IncidentEntity;

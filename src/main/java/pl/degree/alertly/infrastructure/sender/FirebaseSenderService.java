@@ -15,22 +15,20 @@ import static pl.degree.alertly.infrastructure.model.enums.MessageQuantity.ONCE;
 @RequiredArgsConstructor
 public class FirebaseSenderService {
 
-    public void send(String deviceId, IncidentEntity incident, MessageQuantity quantity){
+    public void send(String deviceId, IncidentEntity incident, MessageQuantity quantity) {
         String title = quantity == ONCE ? "Incydent w pobliżu" : "Jesteś blisko incydentu!";
         String body = String.format(
                 "%s (%s) w %s.",
                 incident.getCategory(),
                 incident.getLevel(),
-                incident.getDistrict()
-        );
+                incident.getDistrict());
         Message message = Message.builder()
                 .setToken(deviceId)
                 .setNotification(
                         Notification.builder()
                                 .setTitle(title)
                                 .setBody(body)
-                                .build()
-                )
+                                .build())
                 .build();
 
         String response;
